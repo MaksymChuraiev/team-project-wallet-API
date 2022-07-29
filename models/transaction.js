@@ -48,7 +48,5 @@ const Transaction = model("transaction", transactionSchema);
 
 module.export = {
   Transaction,
-  schemas: {
-    create: joiCreateSchema,
-  },
+  joiCreateSchema,
 };
