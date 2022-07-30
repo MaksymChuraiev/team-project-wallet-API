@@ -37,16 +37,20 @@ const transactionSchema = Schema(
 );
 
 const joiCreateSchema = Joi.object({
-  // date: Joi.date().required(),
+  date: Joi.date().required(),
   type: Joi.boolean(),
   category: Joi.string(),
   comment: Joi.string().min(0).max(40),
   amount: Joi.number().min(0.01).required(),
 });
 
+const schema = {
+  joiCreateSchema,
+};
+
 const Transaction = model("transaction", transactionSchema);
 
-module.export = {
+module.exports = {
   Transaction,
-  joiCreateSchema,
+  schema,
 };

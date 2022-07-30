@@ -1,5 +1,5 @@
-// const create = require("./create");
-// const getAll = require("./getAll");
-// const remove = require("./remove");
+const create = require("./create");
+const getAll = require("./getAll");
+const remove = require("./remove");
 
-// module.exports = { create, getAll, remove };
+module.exports = { create, getAll, remove };

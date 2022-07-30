@@ -1,6 +1,14 @@
-// const { Transaction } = require("../../models");
-// const getAll = async (req, res) => {
-//  console.log("working");
-// };
+const { Transaction } = require("../../models");
+const getAll = async (req, res) => {
+  const result = await Transaction.find({});
 
-// module.exports = getAll;
+  res.status(200).json({
+    status: "success",
+    code: 200,
+    data: {
+      result,
+    },
+  });
+};
+
+module.exports = getAll;
