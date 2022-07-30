@@ -1,8 +1,15 @@
-// const express = require("express");
-// const { auth: ctrl } = require("../../controllers");
+const express = require("express");
+const { ctrlWrapper, validation } = require("../../middlewares");
+const { signupJoiSchema, signinJoiSchema } = require("../../models");
 
-// const router = express.Router();
+const signup = require("../../controllers/auth/signup");
+const signin = require("../../controllers/auth/signin");
+const logout = require("../../controllers/auth/logout");
 
-// router.post("/signup", ctrl.signup);
-// router.post("/signin", ctrl.signin);
-// router.get("/logout", ctrl.logout);
+const router = express.Router();
+
+router.post("/signup", validation(signupJoiSchema), ctrlWrapper(signup));
+router.post("/signin", validation(signinJoiSchema), ctrlWrapper(signin));
+router.get("/logout", ctrlWrapper(logout));
+
+module.exports = router;
