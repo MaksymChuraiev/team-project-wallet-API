@@ -1,12 +1,16 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
+const emailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 const userSchema = Schema(
   {
     email: {
       type: String,
       required: [true, "Email is required"],
       unique: true,
+      match: emailRegex,
     },
     password: {
       type: String,
@@ -17,35 +21,35 @@ const userSchema = Schema(
       type: String,
       required: [true, "Name is required"],
     },
-    balance: {
-      type: Number,
-      default: 0,
-    },
-    totalTransactions: {
-      type: Number,
-      default: 0,
-    },
-    categories: {
-      income: {
-        type: Array,
-        default: ["regular income", "irregular income"],
-      },
-      expense: {
-        type: Array,
-        default: [
-          "basic expenses",
-          "food",
-          "car",
-          "personal growth",
-          "self care",
-          "child care",
-          "household products",
-          "education",
-          "leisure",
-          "other expenses",
-        ],
-      },
-    },
+    // balance: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // totalTransactions: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // categories: {
+    //   income: {
+    //     type: Array,
+    //     default: ["regular income", "irregular income"],
+    //   },
+    //   expense: {
+    //     type: Array,
+    //     default: [
+    //       "basic expenses",
+    //       "food",
+    //       "car",
+    //       "personal growth",
+    //       "self care",
+    //       "child care",
+    //       "household products",
+    //       "education",
+    //       "leisure",
+    //       "other expenses",
+    //     ],
+    //   },
+    // },
     token: {
       type: String,
       default: null,

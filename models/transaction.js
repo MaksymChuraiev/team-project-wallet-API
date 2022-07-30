@@ -4,7 +4,7 @@ const Joi = require("joi");
 const transactionSchema = Schema(
   {
     date: {
-      tupe: Date,
+      type: Date,
       required: [true, "Set date of transaction"],
     },
     type: {
@@ -37,7 +37,7 @@ const transactionSchema = Schema(
 );
 
 const joiCreateSchema = Joi.object({
-  date: Joi.date().required(),
+  // date: Joi.date().required(),
   type: Joi.boolean(),
   category: Joi.string(),
   comment: Joi.string().min(0).max(40),
@@ -48,7 +48,5 @@ const Transaction = model("transaction", transactionSchema);
 
 module.export = {
   Transaction,
-  schemas: {
-    create: joiCreateSchema,
-  },
+  joiCreateSchema,
 };
