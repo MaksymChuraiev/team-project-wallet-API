@@ -4,7 +4,7 @@ const create = async (req, res) => {
   const newTransaction = await Transaction.create({ ...req.body });
   res.status(201).json({
     status: "success",
-    code: 200,
+    code: 201,
     message: "Transaction created",
     data: { newTransaction },
   });

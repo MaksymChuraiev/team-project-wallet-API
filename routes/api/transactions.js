@@ -1,17 +1,16 @@
-// const express = require("express");
-// const { transactions: ctrl } = require("../../controllers/transactions");
-// const { validation, ctrlWrapper } = require("../../middlewares");
-// const { joiCreateSchema } = require("../../models");
+const express = require("express");
+const controllers = require("../../controllers/transactions");
+const { validation, ctrlWrapper, isValidId } = require("../../middlewares");
+const { schema } = require("../../models/transaction");
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get(
-//   "/",
-//   ctrlWrapper((req, res) => {
-//     res.send("all transactions");
-//   })
-// );
-// router.post("/", validation(joiCreateSchema), ctrlWrapper(ctrl.create));
-// router.delete("/:id", ctrlWrapper(ctrl.remove));
+router.get("/", ctrlWrapper(controllers.getAll));
+router.post(
+  "/",
+  validation(schema.joiCreateSchema),
+  ctrlWrapper(controllers.create)
+);
+router.delete("/:id", isValidId, ctrlWrapper(controllers.remove));
 
-// module.exports = router;
+module.exports = router;
