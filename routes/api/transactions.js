@@ -1,6 +1,11 @@
 const express = require("express");
 const controllers = require("../../controllers/transactions");
-const { validation, ctrlWrapper, isValidId } = require("../../middlewares");
+const {
+  validation,
+  ctrlWrapper,
+  isValidId,
+  auth,
+} = require("../../middlewares");
 const { schema } = require("../../models/transaction");
 
 const router = express.Router();
@@ -8,6 +13,7 @@ const router = express.Router();
 router.get("/", ctrlWrapper(controllers.getAll));
 router.post(
   "/",
+  auth,
   validation(schema.joiCreateSchema),
   ctrlWrapper(controllers.create)
 );
