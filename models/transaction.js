@@ -7,7 +7,7 @@ const transactionSchema = Schema(
       type: Date,
       required: [true, "Set date of transaction"],
     },
-    type: {
+    transactionType: {
       type: Boolean,
       default: false,
     },
@@ -31,6 +31,7 @@ const transactionSchema = Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
+      // required: true,
     },
   },
   { versionKey: false, timestamps: true }
