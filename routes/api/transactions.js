@@ -10,7 +10,7 @@ const { schema } = require("../../models/transaction");
 
 const router = express.Router();
 
-router.get("/", ctrlWrapper(controllers.getAll));
+router.get("/", auth, ctrlWrapper(controllers.getAll));
 router.post(
   "/",
   auth,
