@@ -1,5 +1,4 @@
 const { Transaction } = require("../../models");
-// const { BadRequest } = require('http-errors');
 
 const create = async (req, res) => {
   const { _id } = req.user;
@@ -18,8 +17,6 @@ const create = async (req, res) => {
   if (previousTransactions.length > 0) {
     prevBalance = previousTransactions[0].balance;
   }
-
-  console.log("PREV", previousTransactions);
 
   const nextTransactions = await Transaction.find({
     owner: _id,
@@ -42,7 +39,6 @@ const create = async (req, res) => {
     balance: transactionType ? prevBalance + amount : prevBalance - amount,
     owner: _id,
   });
-  console.log("NEW", newTransaction);
 
   res.status(201).json({
     status: "success",
