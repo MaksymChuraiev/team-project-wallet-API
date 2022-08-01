@@ -1,0 +1,390 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.0",
+    "title": "Wallet API overview",
+    "description": "Wallet API overview",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "http://localhost:5000/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorizations endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "Users endpoints"
+    },
+    {
+      "name": "Transactions",
+      "description": "Transactions endpoints"
+    },
+    {
+      "name": "Categories",
+      "description": "Categories endpoints"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User Registration",
+        "parametres": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User-registration-request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-auth-response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Name, email and password should be provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User with email {email} already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User-login-request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-auth-response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email and password shold be provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email or password is wrong"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User Logout (requires authentication token)",
+        "parametres": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User successfully logged out"
+          },
+          "401": {
+            "description": "User unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user information (requires authentication token)",
+        "parametres": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "User information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-auth-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid user",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "62e58802deb5aa50fae7c2c5"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTU4ODAyZGViNWFhNTBmYWU3YzJjNSIsImlhdCI6MTY1OTI1MjM2MywiZXhwIjoxNjU5MjU1OTYzfQ.FNOpnEkDvio__6dtzYre5Lgt8vb6BUdjOuSOyy7luwU"
+          },
+          "name": {
+            "type": "string",
+            "example": "Username"
+          },
+          "balance": {
+            "type": "number",
+            "example": "10000"
+          },
+          "categories": {
+            "type": "object",
+            "properties": {
+              "income": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": ["regular", "irregular"]
+              },
+              "expense": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": ["food", "education"]
+              }
+            }
+          }
+        }
+      },
+      "User-registration-request": {
+        "type": "object",
+        "required": ["email", "password", "name"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": "user@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "password123"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Username"
+          }
+        }
+      },
+      "User-login-request": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          }
+        }
+      },
+      "User-auth-response": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTU4ODAyZGViNWFhNTBmYWU3YzJjNSIsImlhdCI6MTY1OTMzOTA4MSwiZXhwIjoxNjU5MzQyNjgxfQ.9D9TUtxzkaYlZJ5W41v3zyAXXsPnHxHWNqB9Z01ZDbA"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user@gmail.com"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Username"
+              },
+              "categories": {
+                "type": "object",
+                "description": "User's personal transactions categories",
+                "properties": {
+                  "income": {
+                    "type": "array",
+                    "example": ["regular", "irregular"]
+                  },
+                  "expense": {
+                    "type": "array",
+                    "example": ["food", "education"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Categories-response": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "object",
+            "description": "categories",
+            "properties": {
+              "income": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": ["regular", "irregular"]
+              },
+              "expense": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": ["food", "car", "education"]
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "Categories list"
+          }
+        }
+      }
+    }
+  }
+}
