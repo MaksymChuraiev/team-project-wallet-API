@@ -5,8 +5,31 @@ const getByDate = async (req, res) => {
   const { _id } = req.user;
   const { year, month } = req.query;
 
-  const startDate = moment.utc([year, month]).toDate();
-  const endDate = moment(startDate).endOf("month").toDate();
+  let startDate = 0;
+  let endDate = 0;
+
+  if (!month && year) {
+    startDate = moment(year).utc().toDate();
+    endDate = moment(startDate).endOf("year").toDate();
+  }
+
+  if (month && !year) {
+    const format = "YYYY";
+    const currentYear = moment().format(format);
+
+    startDate = moment.utc([currentYear, month]).toDate();
+    endDate = moment(startDate).endOf("month").toDate();
+  }
+
+  if (month && year) {
+    startDate = moment.utc([year, month]).toDate();
+    endDate = moment(startDate).endOf("month").toDate();
+  }
+
+  if (!month && !year) {
+    startDate = moment.utc(["1900"]).toDate();
+    endDate = moment().toDate();
+  }
 
   const aggregateTransactions = async (transactionType) => {
     const transactions = await Transaction.aggregate([
