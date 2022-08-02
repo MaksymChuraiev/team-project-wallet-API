@@ -19,4 +19,6 @@ router.post(
 );
 router.delete("/:id", auth, isValidId, ctrlWrapper(controllers.remove));
 
+router.get("/statistic", auth, ctrlWrapper(controllers.getByDate));
+
 module.exports = router;
