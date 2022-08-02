@@ -13,6 +13,9 @@
   "produces": ["application/json"],
   "servers": [
     {
+      "url": "https://wallet-server-api.herokuapp.com/api"
+    },
+    {
       "url": "http://localhost:5000/api"
     }
   ],
@@ -230,6 +233,26 @@
         }
       }
     },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get categories list",
+        "parametres": [],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Categories list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories-response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions": {
       "get": {
         "tags": ["Transactions"],
@@ -384,6 +407,56 @@
                       "type": "string",
                       "example": "Not authorized"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/statistic": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get user's transactions statistic (requires authentication token)",
+        "parametres": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "month",
+            "description": "Requested month of transactions statistics"
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "year",
+            "description": "Requested year of transactions statistics"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's transactions statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transactions-statistic-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Not authorized" }
                   }
                 }
               }
@@ -646,6 +719,67 @@
             "example": 4
           }
         }
+      },
+      "Transactions-statistic-response": {
+        "type": "object",
+        "description": "Statistics for user's transactions",
+        "properties": {
+          "income": {
+            "type": "array",
+            "description": "Array of income statistics",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "description": "Name of the category",
+                  "example": "Regular income"
+                },
+                "sum": {
+                  "type": "number",
+                  "description": "Total sum of all transactions in this category",
+                  "example": 1000
+                }
+              }
+            }
+          },
+          "expense": {
+            "type": "array",
+            "description": "Array of expense statistics",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "description": "Name of the category",
+                  "example": "Food"
+                },
+                "sum": {
+                  "type": "number",
+                  "description": "Total sum of all transactions in this category",
+                  "example": 500
+                }
+              }
+            }
+          },
+          "totalIncome": {
+            "type": "number",
+            "description": "Total sum of all income transactions",
+            "example": 1000
+          },
+          "totalExpenses": {
+            "type": "number",
+            "description": "Total sum of all expense transactions",
+            "example": 500
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
