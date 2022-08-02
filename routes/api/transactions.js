@@ -17,7 +17,7 @@ router.post(
   validation(schema.joiCreateSchema),
   ctrlWrapper(controllers.create)
 );
-router.delete("/:id", isValidId, ctrlWrapper(controllers.remove));
+router.delete("/:id", auth, isValidId, ctrlWrapper(controllers.remove));
 
 router.get("/statistic", auth, ctrlWrapper(controllers.getByDate));
 

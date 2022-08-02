@@ -13,6 +13,9 @@
   "produces": ["application/json"],
   "servers": [
     {
+      "url": "https://wallet-server-api.herokuapp.com/api"
+    },
+    {
       "url": "http://localhost:5000/api"
     }
   ],
@@ -229,6 +232,238 @@
           }
         }
       }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get categories list",
+        "parametres": [],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Categories list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories-response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get user's transactions (requires authentication token)",
+        "parametres": [
+          {
+            "in": "query",
+            "type": "integer",
+            "name": "page",
+            "description": "Request page number"
+          },
+          {
+            "in": "query",
+            "type": "integer",
+            "name": "limit",
+            "description": "Request limit items per page number"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get user's transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transactions-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Post user's transaction (requires authentication token)",
+        "parametres": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Transactions-request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User's transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transactions-response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Date, amount and category should be provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete user's transactions (requires authentication token)",
+        "parametres": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete user's transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction has been deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/statistic": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get user's transactions statistic (requires authentication token)",
+        "parametres": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "month",
+            "description": "Requested month of transactions statistics"
+          },
+          {
+            "in": "query",
+            "type": "string",
+            "name": "year",
+            "description": "Requested year of transactions statistics"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's transactions statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transactions-statistic-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Not authorized" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -384,6 +619,167 @@
             "example": "Categories list"
           }
         }
+      },
+      "Transactions-request": {
+        "type": "object",
+        "required": ["date", "amount", "category"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date of transaction",
+            "example": "2022-01-03T23:00:00.000Z"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "'true' for deposit (income) and 'false' for withdraw (expense)",
+            "example": true
+          },
+          "category": {
+            "type": "string",
+            "description": "Category",
+            "example": "Food"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment",
+            "example": "About a transactions"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount of transaction",
+            "example": 1500
+          }
+        }
+      },
+      "Transactions-response": {
+        "type": "object",
+        "description": "User's finance data: transactions, balance, current page, total pages",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Transaction id",
+                  "example": "624aa2c0f3a2ee5f009b105d"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Date of transaction",
+                  "example": "03.01.2022"
+                },
+                "type": {
+                  "type": "boolean",
+                  "description": "Deposit or withdraw",
+                  "example": true
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Category",
+                  "example": "Education"
+                },
+                "amount": {
+                  "type": "number",
+                  "description": "Amount of transaction",
+                  "example": 5000
+                },
+                "comment": {
+                  "type": "string",
+                  "description": "Comment to the transaction",
+                  "example": "Family dinner"
+                },
+                "balance": {
+                  "type": "number",
+                  "description": "Total balance after the transaction",
+                  "example": 1000
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "Date of creation",
+                  "example": "2022-07-05T23:00:00.000Z"
+                }
+              }
+            }
+          },
+          "balance": {
+            "type": "number",
+            "description": "Balance from User.balance",
+            "example": 3000
+          },
+          "page": {
+            "type": "number",
+            "description": "Page for pagination",
+            "example": 1
+          },
+          "totalPages": {
+            "type": "number",
+            "description": "Total pages amount for pagination",
+            "example": 4
+          }
+        }
+      },
+      "Transactions-statistic-response": {
+        "type": "object",
+        "description": "Statistics for user's transactions",
+        "properties": {
+          "income": {
+            "type": "array",
+            "description": "Array of income statistics",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "description": "Name of the category",
+                  "example": "Regular income"
+                },
+                "sum": {
+                  "type": "number",
+                  "description": "Total sum of all transactions in this category",
+                  "example": 1000
+                }
+              }
+            }
+          },
+          "expense": {
+            "type": "array",
+            "description": "Array of expense statistics",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "description": "Name of the category",
+                  "example": "Food"
+                },
+                "sum": {
+                  "type": "number",
+                  "description": "Total sum of all transactions in this category",
+                  "example": 500
+                }
+              }
+            }
+          },
+          "totalIncome": {
+            "type": "number",
+            "description": "Total sum of all income transactions",
+            "example": 1000
+          },
+          "totalExpenses": {
+            "type": "number",
+            "description": "Total sum of all expense transactions",
+            "example": 500
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
