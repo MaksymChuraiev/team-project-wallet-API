@@ -43,7 +43,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User Registration",
-        "parametres": [],
+        "parameters": [],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -164,7 +164,7 @@
       "get": {
         "tags": ["Auth"],
         "summary": "User Logout (requires authentication token)",
-        "parametres": [],
+        "parameters": [],
         "security": [
           {
             "Bearer": []
@@ -197,7 +197,7 @@
       "get": {
         "tags": ["Users"],
         "summary": "Get user information (requires authentication token)",
-        "parametres": [],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -237,7 +237,7 @@
       "get": {
         "tags": ["Categories"],
         "summary": "Get categories list",
-        "parametres": [],
+        "parameters": [],
         "security": [],
         "responses": {
           "200": {
@@ -257,7 +257,7 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "Get user's transactions (requires authentication token)",
-        "parametres": [
+        "parameters": [
           {
             "in": "query",
             "type": "integer",
@@ -308,7 +308,7 @@
       "post": {
         "tags": ["Transactions"],
         "summary": "Post user's transaction (requires authentication token)",
-        "parametres": [],
+        "parameters": [],
         "security": [
           {
             "Bearer": []
@@ -326,8 +326,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "User's transactions",
+          "201": {
+            "description": "User's transaction created",
             "content": {
               "application/json": {
                 "schema": {
@@ -373,10 +373,18 @@
       "delete": {
         "tags": ["Transactions"],
         "summary": "Delete user's transactions (requires authentication token)",
-        "parametres": [],
+
         "security": [
           {
             "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "_id",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -419,7 +427,7 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "Get user's transactions statistic (requires authentication token)",
-        "parametres": [
+        "parameters": [
           {
             "in": "query",
             "type": "string",
@@ -622,10 +630,10 @@
       },
       "Transactions-request": {
         "type": "object",
-        "required": ["date", "amount", "category"],
+        "required": ["date", "amount", "category", "transactionType"],
         "properties": {
           "date": {
-            "type": "string",
+            "transactionType": "string",
             "description": "Date of transaction",
             "example": "2022-01-03T23:00:00.000Z"
           },
