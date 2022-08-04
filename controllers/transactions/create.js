@@ -9,8 +9,9 @@ const create = async (req, res) => {
     date: { $lt: date },
   }).sort({
     date: -1,
-    createdAt: -1,
   });
+
+  console.log("PREV", previousTransactions);
 
   let prevBalance = 0;
 
@@ -18,13 +19,18 @@ const create = async (req, res) => {
     prevBalance = previousTransactions[0].balance;
   }
 
+  if (previousTransactions.length === 0) {
+    prevBalance = 0;
+  }
+
   const nextTransactions = await Transaction.find({
     owner: _id,
     date: { $gte: date },
   }).sort({
     date: -1,
-    createdAt: -1,
   });
+
+  console.log("NEXT", nextTransactions);
 
   for (let i = 0; i < nextTransactions.length; i += 1) {
     await Transaction.findByIdAndUpdate(nextTransactions[i]._id, {
@@ -39,6 +45,8 @@ const create = async (req, res) => {
     balance: transactionType ? prevBalance + amount : prevBalance - amount,
     owner: _id,
   });
+
+  console.log("NEW", newTransaction);
 
   res.status(201).json({
     status: "success",

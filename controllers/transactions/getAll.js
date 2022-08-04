@@ -9,12 +9,12 @@ const getAll = async (req, res) => {
   //   skip,
   //   limit: Number(limit),
   // }).populate("owner", "_id name email");
-  
-  const result = await Transaction.find({ owner: _id }).populate(
-    "owner",
-    "_id name email"
-  );
 
+  const result = await Transaction.find({ owner: _id })
+    .populate("owner", "_id name email")
+    .sort({
+      date: -1,
+    });
 
   res.status(200).json({
     status: "success",
