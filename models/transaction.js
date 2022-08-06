@@ -7,7 +7,7 @@ const transactionSchema = Schema(
       type: Date,
       required: [true, "Set date of transaction"],
     },
-    type: {
+    transactionType: {
       type: Boolean,
       default: false,
     },
@@ -39,7 +39,7 @@ const transactionSchema = Schema(
 
 const joiCreateSchema = Joi.object({
   date: Joi.date().required(),
-  type: Joi.boolean(),
+  transactionType: Joi.boolean(),
   category: Joi.string(),
   comment: Joi.string().min(0).max(40),
   amount: Joi.number().min(0.01).required(),
