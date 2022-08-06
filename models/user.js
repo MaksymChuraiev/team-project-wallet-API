@@ -57,9 +57,14 @@ const userSchema = Schema(
 
 userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+  return this;
 };
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
+};
+userSchema.methods.setBalance = function (balance) {
+  this.balance = balance;
+  return this;
 };
 
 const signupJoiSchema = Joi.object({
