@@ -7,7 +7,7 @@ const transactionSchema = Schema(
       type: Date,
       required: [true, "Set date of transaction"],
     },
-    type: {
+    transactionType: {
       type: Boolean,
       required: [true, "Set type"],
     },
