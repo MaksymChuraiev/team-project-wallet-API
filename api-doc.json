@@ -630,14 +630,14 @@
       },
       "Transactions-request": {
         "type": "object",
-        "required": ["date", "amount", "category", "transactionType"],
+        "required": ["date", "amount", "category", "type"],
         "properties": {
           "date": {
-            "transactionType": "string",
+            "type": "string",
             "description": "Date of transaction",
             "example": "2022-01-03T23:00:00.000Z"
           },
-          "transactionType": {
+          "type": {
             "type": "boolean",
             "description": "'true' for deposit (income) and 'false' for withdraw (expense)",
             "example": true
@@ -678,7 +678,7 @@
                   "description": "Date of transaction",
                   "example": "03.01.2022"
                 },
-                "transactionType": {
+                "type": {
                   "type": "boolean",
                   "description": "Deposit or withdraw",
                   "example": true
