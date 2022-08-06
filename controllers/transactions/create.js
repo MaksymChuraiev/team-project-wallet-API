@@ -52,7 +52,7 @@ const create = async (req, res) => {
     status: "success",
     code: 201,
     message: "Transaction created",
-    data: { newTransaction },
+    data: newTransaction,
   });
 };
 
