@@ -13,14 +13,19 @@ const getAll = async (req, res) => {
   const result = await Transaction.find({ owner: _id })
     .populate("owner", "_id name email")
     .sort({
-      date: -1,
+      date: 1,
     });
+
+  const sortResult = [...result].reverse();
+
+  console.log("RES", result);
+  console.log("SORT", sortResult);
 
   res.status(200).json({
     status: "success",
     code: 200,
     data: {
-      result,
+      sortResult,
     },
   });
 };

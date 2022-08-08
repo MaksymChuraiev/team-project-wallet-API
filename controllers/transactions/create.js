@@ -6,9 +6,10 @@ const create = async (req, res) => {
 
   const previousTransactions = await Transaction.find({
     owner: _id,
-    date: { $lt: date },
+    date: { $lt: Date.parse(date) + 1 },
   }).sort({
     date: -1,
+    createdAt: -1,
   });
 
   console.log("PREV", previousTransactions);
@@ -25,9 +26,10 @@ const create = async (req, res) => {
 
   const nextTransactions = await Transaction.find({
     owner: _id,
-    date: { $gte: date },
+    date: { $gte: Date.parse(date) + 1 },
   }).sort({
     date: -1,
+    // createdAt: -1,
   });
 
   console.log("NEXT", nextTransactions);
