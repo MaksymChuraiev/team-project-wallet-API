@@ -5,7 +5,7 @@ const Joi = require("joi");
 // eslint-disable-next-line no-useless-escape
 const emailRegexp =
   /^((([0-9A-Za-z]{1}[-0-9A-z.]{1,}[0-9A-Za-z]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/;
-// const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+// const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = Schema(
   {
@@ -13,7 +13,6 @@ const userSchema = Schema(
       type: String,
       required: [true, "Email is required"],
       unique: true,
-      match: emailRegexp,
     },
     password: {
       type: String,
@@ -71,7 +70,7 @@ userSchema.methods.setBalance = function (balance) {
 
 const signupJoiSchema = Joi.object({
   name: Joi.string().min(1).max(12).required(),
-  email: Joi.string().required(),
+  email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).max(12).required(),
 });
 const signinJoiSchema = Joi.object({
