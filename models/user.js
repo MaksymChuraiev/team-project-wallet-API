@@ -68,7 +68,7 @@ userSchema.methods.setBalance = function (balance) {
 };
 
 const signupJoiSchema = Joi.object({
-  name: Joi.string().min(2).max(12).required(),
+  name: Joi.string().min(1).max(12).required(),
   email: Joi.string().required(),
   password: Joi.string().min(6).max(12).required(),
 });
