@@ -1,6 +1,6 @@
 const { User } = require("../../models");
 const { Conflict } = require("http-errors");
-// const bcrypt = require;
+
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
   const user = await User.findOne({ email });

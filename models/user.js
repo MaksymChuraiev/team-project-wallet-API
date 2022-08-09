@@ -5,7 +5,6 @@ const Joi = require("joi");
 // eslint-disable-next-line no-useless-escape
 const emailRegexp =
   /^((([0-9A-Za-z]{1}[-0-9A-z.]{1,}[0-9A-Za-z]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/;
-// const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = Schema(
   {

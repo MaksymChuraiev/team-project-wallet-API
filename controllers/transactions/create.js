@@ -27,7 +27,6 @@ const create = async (req, res) => {
     date: { $gte: Date.parse(date) + 1 },
   }).sort({
     date: -1,
-    // createdAt: -1,
   });
 
   for (let i = 0; i < nextTransactions.length; i += 1) {
