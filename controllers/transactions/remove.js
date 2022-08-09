@@ -16,8 +16,6 @@ const remove = async (req, res) => {
     date: -1,
   });
 
-  console.log(nextTransactions);
-
   for (let i = 0; i < nextTransactions.length; i += 1) {
     await Transaction.findByIdAndUpdate(nextTransactions[i]._id, {
       balance: transactionType

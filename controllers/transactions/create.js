@@ -12,8 +12,6 @@ const create = async (req, res) => {
     createdAt: -1,
   });
 
-  console.log("PREV", previousTransactions);
-
   let prevBalance = 0;
 
   if (previousTransactions.length > 0) {
@@ -32,8 +30,6 @@ const create = async (req, res) => {
     // createdAt: -1,
   });
 
-  console.log("NEXT", nextTransactions);
-
   for (let i = 0; i < nextTransactions.length; i += 1) {
     await Transaction.findByIdAndUpdate(nextTransactions[i]._id, {
       balance: transactionType
@@ -47,8 +43,6 @@ const create = async (req, res) => {
     balance: transactionType ? prevBalance + amount : prevBalance - amount,
     owner: _id,
   });
-
-  console.log("NEW", newTransaction);
 
   res.status(201).json({
     status: "success",
