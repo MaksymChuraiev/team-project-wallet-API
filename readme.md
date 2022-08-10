@@ -19,7 +19,7 @@
 
 ### Ссылка на Front-end репозиторий
 
-<a href ="https://github.com/MaksymChuraiev/team-project-wallet">https://github.com/wallet</a>
+<a href ="https://github.com/MaksymChuraiev/team-project-wallet">GitHub</a>
 
 ### Команди:
 
