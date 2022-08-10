@@ -2,12 +2,12 @@
 
 1. <a href ="https://github.com/MaksymChuraiev">Maksym Churaiev</a> - Team Lead
 2. <a href = "https://github.com/Ye2212">Yevheniia Ukolova</a> - Scrum Master
-3. <a href= "https://github.com/VenjaVenja">Denys Venher</a>
-4. <a href = "https://github.com/AKdimka">Dmytro Bryhadyr</a>
-5. <a href = "https://github.com/DenisMalv">Denys Malniev</a>
+3. <a href= "https://github.com/VenjaVenja">Denys Venher</a> - Full stack developer
+4. <a href = "https://github.com/AKdimka">Dmytro Bryhadyr</a> - Full stack developer
+5. <a href = "https://github.com/DenisMalv">Denys Malniev</a> - Full stack developer
 6. <a href = "https://github.com/aleksandr-krivoruchko">Oleksandr
-   Kryvoruchko</a>
-7. <a href = "https://github.com/AnastasiaLes">Anastasiia Les</a>
+   Kryvoruchko</a> - Full stack developer
+7. <a href = "https://github.com/AnastasiaLes">Anastasiia Les</a> - Full stack developer
 
 ### Ссылка на сайт
 
