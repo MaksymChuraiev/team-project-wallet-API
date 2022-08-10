@@ -1,3 +1,26 @@
+### Над проэктом работали
+
+1. <a href ="https://github.com/MaksymChuraiev">Maksym Churaiev</a> - Team Lead
+2. <a href = "https://github.com/Ye2212">Yevheniia Ukolova</a> - Scrum Master
+3. <a href= "https://github.com/VenjaVenja">Denys Venher</a>
+4. <a href = "https://github.com/AKdimka">Dmytro Bryhadyr</a>
+5. <a href = "https://github.com/DenisMalv">Denys Malniev</a>
+6. <a href = "https://github.com/aleksandr-krivoruchko">Oleksandr
+   Kryvoruchko</a>
+7. <a href = "https://github.com/AnastasiaLes">Anastasiia Les</a>
+
+### Ссылка на сайт
+
+<a href ="https://team-project-wallet.netlify.app/">Wallet-api</a>
+
+### Документация
+
+<a href ="https://wallet-server-api.herokuapp.com/api-docs/">Wallet-api</a>
+
+### Ссылка на Front-end репозиторий
+
+<a href ="https://github.com/MaksymChuraiev/team-project-wallet">Wallet</a>
+
 ### Команди:
 
 - `npm start` &mdash; старт сервера в режимі production
