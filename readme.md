@@ -11,7 +11,7 @@
 
 ### Ссылка на сайт
 
-<a href ="https://team-project-wallet.netlify.app/">Wallet-api</a>
+<a href ="https://team-project-wallet.netlify.app/">Wallet</a>
 
 ### Документация
 
@@ -19,7 +19,7 @@
 
 ### Ссылка на Front-end репозиторий
 
-<a href ="https://github.com/MaksymChuraiev/team-project-wallet">Wallet</a>
+<a href ="https://github.com/MaksymChuraiev/team-project-wallet">https://github.com/wallet</a>
 
 ### Команди:
 
